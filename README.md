@@ -6,7 +6,7 @@ Functionality as internationalization and samples of how to use React-Query are 
 ## Tech Stack
 - Next.js 13
 - Typescript 5
-- React-Query 5
+- React-Query 4
 - I18n
 - Css Modules
 
@@ -15,6 +15,19 @@ Functionality as internationalization and samples of how to use React-Query are 
 npm install
 ```
 
+#### Note: If you are using VSCode, you can install the recommended extensions for this project.
+- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+- [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+
+#### Note: If you are using JetBrains IDEs, you can activate the recommended plugins for this project.
+`Settings -> Languages & Frameworks -> JavaScript -> Code Quality Tools -> ESLint -> Automatic ESLint configuration
+`
+
+`Settings -> Languages & Frameworks -> JavaScript -> Prettier -> Run on save -> Automatic Prettier configuration
+`
+#### Note: change the name of .env.example to .env.local and add the environment variables.
+
+## Project scripts
 
 ### Compiles and hot-reloads for development
 ```
