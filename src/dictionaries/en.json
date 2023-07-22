@@ -1,0 +1,11 @@
+{
+  "global": {
+    "locale-switcher": "Locale Switcher"
+  },
+  "index": {
+    "title": "Welcome to the Index",
+    "message": "This is the index page",
+    "changeToEnglish": "Change to English",
+    "changeToSpanish": "Change to Spanish"
+  }
+}
