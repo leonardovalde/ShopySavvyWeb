@@ -1,0 +1,44 @@
+.localeSwitcher {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 0 0 0 1rem;
+}
+
+.localeSwitcher p {
+    margin: 0 0 0 0.5rem;
+    padding: .5rem
+}
+
+.localeSwitcher ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.localeSwitcher li {
+    display: inline-block;
+    margin: 0 0.5rem 0 0;
+}
+
+.localeSwitcher li:last-child {
+    margin: 0;
+}
+
+.localeSwitcher li a {
+    color: #000000;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    transition: all 0.1s ease-in-out;
+}
+
+.localeSwitcher li a:hover {
+    background-color: rgba(84, 84, 84, 0.37);
+}
+
+
