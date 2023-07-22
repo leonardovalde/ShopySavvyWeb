@@ -1,10 +1,11 @@
 'use client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import getQueryClient from '@/helpers/get-query-client';
-import { useState } from 'react';
+import { ReactNode } from 'react';
 import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
+import { ThemeProvider } from 'next-themes';
 
+// eslint-disable-next-line @next/next/no-async-client-component
 export default async function Providers(params: PageProps) {
   const queryClient = new QueryClient();
   let messages;
@@ -16,12 +17,13 @@ export default async function Providers(params: PageProps) {
   return (
     <NextIntlClientProvider locale={params.locale} messages={messages}>
       <QueryClientProvider client={queryClient}>
-        {params.children}
+        <ThemeProvider>{params.children}</ThemeProvider>
       </QueryClientProvider>
     </NextIntlClientProvider>
   );
 }
+
 interface PageProps {
-  children: React.ReactNode;
+  children: ReactNode;
   locale: string;
 }

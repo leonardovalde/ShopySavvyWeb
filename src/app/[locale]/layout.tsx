@@ -1,4 +1,5 @@
 import Providers from '@/helpers/Providers';
+import '../globals.css';
 import { useLocale, useTranslations } from 'next-intl';
 import { notFound } from 'next/navigation';
 

@@ -27,14 +27,13 @@
 }
 
 .localeSwitcher li a {
-    color: #000000;
+    color: var(--text);
     text-decoration: none;
     font-size: 0.8rem;
     font-weight: 600;
     text-transform: uppercase;
     padding: 0.5rem;
     border-radius: 0.25rem;
-    transition: all 0.1s ease-in-out;
 }
 
 .localeSwitcher li a:hover {

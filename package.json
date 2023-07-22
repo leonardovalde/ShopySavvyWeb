@@ -24,6 +24,7 @@
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "4.29.25",
     "eslint-config-prettier": "8.8.0",
+    "next-themes": "^0.2.1",
     "prettier": "3.0.0"
   }
 }
