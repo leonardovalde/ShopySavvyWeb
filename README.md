@@ -1,4 +1,4 @@
-# Cronoplanner 3 - Frontend
+# NEXT - TEMPLATE
 This project has a template for a Next.js project with Typescript, React-Query, I18n and Css Modules.
 
 Functionality as internationalization and samples of how to use React-Query are included.
