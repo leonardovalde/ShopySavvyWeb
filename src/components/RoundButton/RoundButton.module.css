@@ -1,0 +1,25 @@
+.roundButton {
+  display: flex;
+  width: 100%;
+  max-width: 500px;
+  padding: 13px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50em;
+  color: white;
+  border: none;
+}
+
+.roundButton:hover {
+  cursor: pointer;
+}
+
+.primary {
+  background: var(--principal-orange);
+}
+
+.secondary {
+  background: white;
+  color: var(--text);
+  border: 1px solid var(--secondary-text);
+}
