@@ -9,7 +9,8 @@ interface RoundButtonProps {
 
 function RoundButton(props: RoundButtonProps) {
     return (
-        <button className={styles.roundButton + ' ' + styles[props.primary ? 'primary' : 'secondary']} onClick={props.onClick}>{props.text}</button>
+        <button className={styles.roundButton + ' ' + styles[props.primary ? 'primary' : 'secondary']}
+            onClick={props.onClick}>{props.text}</button>
     )
 }
 

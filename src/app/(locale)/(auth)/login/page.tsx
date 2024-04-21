@@ -6,9 +6,14 @@ import TextInput from '@/components/TextInput/TextInput'
 import ThemeSwitcher from '@/components/ThemeSwitcher/ThemeSwitcher'
 import RoundButton from '@/components/RoundButton/RoundButton'
 import Switch from "react-switch";
+import { signIn } from 'next-auth/react'
+import GoogleButton from '@/components/GoogleButton/GoogleButton'
 
 function page() {
     const [checked, setChecked] = useState(false);
+    function handleGoogleLogin() {
+        signIn('google', { callbackUrl: 'http://localhost:3000/home' })
+    }
     return (
         <div className={styles.container}>
             <section className={styles.bannerSection}>
@@ -34,9 +39,12 @@ function page() {
                     </section>
                 </section>
                 <section className={styles.formFooter}>
-                    <a className={styles.link} href='/home'>
-                        <RoundButton text='Login' primary={true} />
-                    </a>
+                    <section className={styles.loginButtons}>
+                        <a className={styles.link} href='/home'>
+                            <RoundButton text='Login' primary={true} />
+                        </a>
+                        <GoogleButton onClick={handleGoogleLogin} />
+                    </section>
                     <a className={styles.link} href='/register'>
                         <RoundButton text='Register' />
                     </a>

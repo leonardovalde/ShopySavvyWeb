@@ -52,6 +52,11 @@
   width: 100%;
   text-decoration: none;
 }
+.loginButtons {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+}
 
 .rememberMe {
   font-weight: 200;

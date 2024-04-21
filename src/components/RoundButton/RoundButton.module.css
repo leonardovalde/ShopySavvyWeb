@@ -15,11 +15,11 @@
 }
 
 .primary {
-  background: var(--principal-orange);
+  background: #ff8600;
 }
 
 .secondary {
   background: white;
-  color: var(--text);
-  border: 1px solid var(--secondary-text);
+  color: #000000;
+  border: 1px solid #a4a4a4;
 }
