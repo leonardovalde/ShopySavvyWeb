@@ -1,0 +1,27 @@
+.container {
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 6.6rem;
+  gap: 0.5rem;
+}
+.container:hover {
+  cursor: pointer;
+}
+.container > * {
+  margin: 0;
+}
+.container > img {
+  width: 6.3rem;
+  border-radius: 50%;
+}
+.container > p {
+  font-size: 1rem;
+  font-weight: 200;
+  text-wrap: wrap;
+  text-align: center;
+}
+.container > p::first-letter {
+  text-transform: capitalize;
+}

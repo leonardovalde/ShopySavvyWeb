@@ -44,7 +44,26 @@
   display: flex;
   flex-direction: column;
   margin: auto 0;
+  padding: 1.5rem 0;
   gap: 20px;
+}
+
+.formBody > h4 {
+  margin: 0;
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: #9d5ce9;
+}
+
+.formBody > h4:hover {
+  cursor: pointer;
+}
+
+.divider {
+  padding-top: 30px;
+  width: 100%;
+  border-bottom: 1px solid rgb(182, 182, 182);
+  background-color: var(--secondary-text);
 }
 
 .link {
@@ -55,7 +74,28 @@
 .loginButtons {
   width: 100%;
   display: flex;
+  flex-direction: column;
   gap: 10px;
+}
+.loginButtons > section {
+  display: flex;
+  gap: 10px;
+  margin: 5px 0;
+}
+
+.loginButtons > h4 {
+  margin: 0;
+  font-weight: 300;
+  font-size: 0.8rem;
+}
+
+.loginButtons > h4 > span {
+  font-weight: 600;
+  color: #9d5ce9;
+}
+
+.loginButtons > h4 > span:hover {
+  cursor: pointer;
 }
 
 .rememberMe {

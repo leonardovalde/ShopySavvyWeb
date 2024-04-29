@@ -1,0 +1,78 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  box-shadow: 2px 2px 28px 0px rgba(0, 0, 0, 0.15);
+  position: relative;
+
+  min-width: 280px;
+}
+.iconContainer {
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 50%;
+  background-color: #668a4e;
+  transition: all 0.2s ease;
+}
+.iconContainer:hover {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  transform: scale(1.1);
+}
+.container > * {
+  margin: 0;
+}
+.container > img {
+  object-fit: contain;
+  height: 190px;
+  width: auto;
+}
+.infoContainer {
+  display: grid;
+  grid-template-rows: 3.5fr 1fr;
+  gap: 0.5rem;
+  justify-content: space-between;
+}
+.infoContainer > * {
+  margin: 0;
+}
+
+.price {
+  font-size: 0.93rem;
+  font-weight: 500;
+}
+
+.name {
+  font-size: 0.8rem;
+  font-weight: 300;
+}
+
+.storesContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  /* background-color: blue; */
+}
+
+.storesContainer > img {
+  height: 30px;
+}
+
+.selectorContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1040;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(5px);
+}

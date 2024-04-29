@@ -19,10 +19,10 @@ function Sidebar({ onClose }: { onClose: () => void }) {
             </section>
             <section className={styles.user}>
                 {session.data?.user?.image && <Image className={styles.image} src={session.data?.user?.image} width={100} height={100} alt="logo" />}
-                <p className={styles.userName}>{session.data?.user?.name}</p>
+                <p className={styles.userName}>{session.data?.user?.email}</p>
             </section>
 
-            <a className={styles.logoutButton} href="/login" onClick={() => signOut({callbackUrl: '/login', redirect: true})}>
+            <a className={styles.logoutButton} href="/login" onClick={() => signOut({ callbackUrl: '/login', redirect: true })}>
                 Logout
             </a>
         </div>

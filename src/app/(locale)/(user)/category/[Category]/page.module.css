@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: 0 auto;
+}
+.container > h1 {
+  margin-left: 1rem;
+  font-weight: 400;
+  font-size: 1.76rem;
+  padding-left: 1rem;
+}
+.container > h1::first-letter {
+  text-transform: capitalize;
+}
+.productsContainer {
+  margin: 1.8rem 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.8rem;
+}
