@@ -2,7 +2,6 @@
 import { authOptions } from '../../pages/api/auth/[...nextauth]';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactNode } from 'react';
-import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { ThemeProvider } from 'next-themes';
 import { SessionProvider } from 'next-auth/react';

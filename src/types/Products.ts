@@ -24,4 +24,3 @@ export interface CartProductsType {
   totalPrice: number;
   products: ProductCartType[];
 }
-[];
