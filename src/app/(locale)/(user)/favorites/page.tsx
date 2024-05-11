@@ -7,6 +7,7 @@ import styles from './page.module.css';
 import { ProductCartType, ProductType } from '@/types/Products';
 import { ToastContainer, toast } from 'react-toastify';
 import { addItemToCart } from '@/helpers/cartHelper';
+import { GetFavorites } from '@/helpers/favHelper';
 
 function page({ params }: { params: { Category: string } }) {
   const [showGetMore, setShowGetMore] = useState(true);
@@ -16,24 +17,12 @@ function page({ params }: { params: { Category: string } }) {
   const [products, setProducts] = useState<any[]>([]);
   useEffect(() => {
     const getProducts = async () => {
-      const newProducts: any =
-        (await params.Category) === 'all_products'
-          ? await GetProducts(session?.user.accessToken as string)
-          : await GetProductByCategory(
-              session?.user.accessToken as string,
-              params.Category,
-              page,
-              limit,
-            );
-      products.length === 0 &&
-        setProducts(
-          newProducts.items
-            ? newProducts.items.sort(() => Math.random() - 0.5)
-            : [],
-        );
+      const newProducts: any = GetFavorites();
+      setProducts(newProducts);
     };
     session?.user.accessToken && getProducts();
   }, [session?.user.accessToken]);
+  useEffect(() => {}, [products]);
   async function handleLoadMore() {
     const newProducts = await GetProductByCategory(
       session?.user.accessToken as string,
@@ -49,23 +38,28 @@ function page({ params }: { params: { Category: string } }) {
     addItemToCart(product);
     toast.success(`${product.product.name} added to cart `);
   };
+  const handleRemoveFavorite = (product: ProductType): void => {
+    const newProducts = products.filter(
+      (item) => item.productId !== product.productId,
+    );
+    setProducts(newProducts);
+  };
   return (
     <div className={styles.container}>
       <ToastContainer autoClose={1000} />
       <h1>
-        Category:{' '}
-        <span>{params.Category.replaceAll('_', ' ').toUpperCase()}</span>
+        <span>Favorites</span>
       </h1>
       <section className={styles.productsContainer}>
         {products.map((product, index) => (
-          <ProductCard product={product} key={index} onAdd={handleCartAdd} />
+          <ProductCard
+            product={product}
+            key={index}
+            onAdd={handleCartAdd}
+            onRemoveFavorite={handleRemoveFavorite}
+          />
         ))}
       </section>
-      {showGetMore && products.length > 0 && (
-        <button className={styles.loadMoreButton} onClick={handleLoadMore}>
-          Load More
-        </button>
-      )}
     </div>
   );
 }

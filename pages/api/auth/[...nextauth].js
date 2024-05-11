@@ -2,6 +2,7 @@ import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { Router } from 'next/navigation';
+import { CleanCart } from '@/helpers/cartHelper';
 
 export const authOptions = {
   // Configure one or more authentication providers
@@ -17,7 +18,7 @@ export const authOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        const res = await fetch(
+        const user = await fetch(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/login`,
           {
             method: 'POST',
@@ -31,8 +32,12 @@ export const authOptions = {
             }),
             headers: { 'Content-Type': 'application/json' },
           },
-        );
-        const user = await res.json();
+        ).then((res) => {
+          // res.status === 200 && localStorage.setItem('cart', '[]');
+          return res.json();
+        });
+        // const user = await res.json();
+        // CleanCart();
         console.log(user);
         if (user.error) throw user;
         return { ...user, email: credentials?.email };

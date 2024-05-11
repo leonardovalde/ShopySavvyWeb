@@ -1,0 +1,80 @@
+.searchBarContainer {
+  display: flex;
+  /* background-color: red; */
+  height: 30px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.searchBarContainer > input {
+  width: 50%;
+  height: 100%;
+  background-color: #f5f5f5;
+  border: none;
+  outline: none;
+  padding: 5px 15px;
+  border-radius: 10px;
+  font-size: 0.76rem;
+}
+.searchListContainer {
+  position: absolute;
+  width: 50%;
+  background-color: white;
+  height: 300px;
+  top: 42px;
+  padding: 0 15px;
+  box-shadow: 0px 0px 24px -7px rgba(75, 75, 75, 0.5);
+  border-radius: 10px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px 15px;
+}
+
+.searchItem {
+  display: flex;
+  justify-content: space-between;
+  background-color: #fdfbfb;
+  border-radius: 6px;
+  padding: 3px 10px;
+  gap: 10px;
+}
+.searchItem:hover {
+  cursor: pointer;
+  background-color: #f0f0f0;
+}
+
+.searchItem > h4 {
+  margin: auto 0;
+  font-size: 0.8rem;
+}
+.searchItem > section {
+  display: flex;
+  justify-content: center;
+  font-size: 0.4rem;
+  align-items: center;
+  gap: 10px;
+}
+.searchItem > section > h1 {
+  font-weight: 300;
+}
+.searchItem > section * {
+  margin: 0;
+}
+.searchItem > section > img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.selectorContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1040;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(5px);
+}

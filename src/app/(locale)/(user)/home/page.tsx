@@ -1,6 +1,6 @@
 'use client'
 import CategoryItem from '@/components/CategoryItem/CategoryItem'
-import { GetProducts } from '@/services/api/products'
+import { GetProducts, GetCategories } from '@/services/api/products'
 import { signOut, useSession } from 'next-auth/react'
 import { useEffect, useRef, useState } from 'react'
 import styles from './page.module.css'
@@ -43,19 +43,19 @@ function page() {
     useEffect(() => {
         const getProducts = async () => {
             const newProducts = await GetProducts(session?.user.accessToken as string)
-            setProducts(newProducts)
-            const newCategories: { category: string; id: number; image: string }[] = [];
-            newProducts.forEach((product: any) => {
-                if (!newCategories.find((category) => category.category === product.category)) {
-                    newCategories.push({
-                        category: product.category,
-                        id: newCategories.length + 1,
-                        image: product.photosurl,
-                    });
-                }
-            });
-            setCategories(newCategories);
+            setProducts(newProducts.items)
         }
+        const getCategories = async () => {
+            const newCategories = await GetCategories(session?.user.accessToken as string).then(data => data.categories.map((category: string, i: number) => ({
+                category: category,
+                id: i,
+                image: `/images/${category}.jpg`,
+            })))
+            console.log(newCategories);
+
+            setCategories(newCategories)
+        }
+        getCategories()
         getProducts()
     }, [session?.user.accessToken])
     function handleAdd({ product }: { product: string }): void {
@@ -68,7 +68,7 @@ function page() {
 
     return (
         <div>
-            <ToastContainer />
+            <ToastContainer autoClose={1000} />
             <section className={styles.categoriesContainer}>
                 <h4>Categories</h4>
                 <section className={styles.categories}>

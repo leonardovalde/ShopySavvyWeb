@@ -5,7 +5,8 @@
 .navBar {
   height: 50px;
   border-bottom: 1px solid #9e9e9e;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 6fr 1fr;
   align-items: center;
   padding: 0 20px;
   justify-content: space-between;
@@ -27,7 +28,7 @@
   height: 100vh;
   border-right: 1px solid #9e9e9e;
   background-color: #f1f2f6;
-  width: 300px;
+  width: 350px;
   top: 0;
   opacity: 1;
   z-index: 100;
@@ -44,4 +45,40 @@
 
 .body::-webkit-scrollbar {
   width: 10px;
+}
+.menuIcon {
+  font-size: 35px;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.menuIcon:hover {
+  cursor: pointer;
+  /* font-size: 40px; */
+  transform: scale(1.1);
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.title > h1 {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #ff8600;
+}
+.title > h1 > span {
+  color: #804300;
+}
+
+.title > h1:hover{
+  cursor: pointer;
+}
+
+.cartContainer{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }

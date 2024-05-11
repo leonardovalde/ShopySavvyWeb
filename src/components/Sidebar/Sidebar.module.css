@@ -1,17 +1,37 @@
 .container {
-  display: flex;
+  display: grid;
   height: 100vh;
-  grid-template-rows: 1fr 2fr 4fr 1fr;
+  grid-template-rows: 280px 2fr 1fr;
   flex-direction: column;
   align-items: center;
-  padding: 10px;
+  /* padding: 10px; */
+}
+.banner {
+  position: absolute;
+  object-fit: cover;
+  height: 200px;
+  width: 100%;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+}
+.userImage {
+  position: absolute;
+  top: 140px;
+  right: 50%;
+  transform: translateX(50%);
+  border-radius: 50%;
+  z-index: 10;
+  width: 100px;
+  border: 10px solid #f1f2f6;
 }
 .header {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-content: flex-end;
-  background-color: aqua;
+  height: 335px;
   width: 100%;
+  align-items: center;
 }
 .user {
   margin: 100px 0;
@@ -20,13 +40,32 @@
   align-items: center;
 }
 .userName {
+  position: absolute;
+  bottom: 0;
   font-weight: 200;
   font-size: 1.5rem;
+  text-align: center;
+  width: 80%;
+}
+.sideBarBody {
+  display: flex;
+  font-weight: 200;
+  font-size: 1.5rem;
+  flex-direction: column;
+  padding: 0 10%;
+}
+.sideBarBody > span {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin: 15px;
+}
+.sideBarBody > span:hover {
+  cursor: pointer;
 }
 .closeButton {
   position: absolute;
   right: 0;
-  border: none;
 }
 .closeButton:hover {
   cursor: pointer;
@@ -35,21 +74,37 @@
 .image {
   border-radius: 50%;
 }
+.sideBarFooter {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
 
 .logoutButton {
-  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 10px 20px;
   border-radius: 20px;
-  background-color: transparent;
+  background-color: #ececec;
   font-size: 1.5rem;
   font-weight: 200;
   text-decoration: none;
   color: black;
-}
-.logoutButton > button {
+  height: 70px;
+  width: 85%;
   border: none;
+  outline: none;
+  box-shadow: 0px 0px 14px -1px rgba(0, 0, 0, 0.12);
 }
-.logoutButton > button :hover {
+.logoutButton:hover {
   cursor: pointer;
-  /* transform: scale(1.1); */
+  font-size: 1.56rem;
+}
+
+.divider {
+  width: 100%;
+  margin: 0;
+  border-bottom: 0.3px solid #000000;
 }

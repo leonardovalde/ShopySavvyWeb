@@ -21,6 +21,7 @@ export interface ProductCartType {
 }
 export interface CartProductsType {
   storeName: string;
+  totalPrice: number;
   products: ProductCartType[];
 }
 [];
