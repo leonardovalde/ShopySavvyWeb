@@ -1,7 +1,8 @@
+import { getCart } from '@/services/api/cart';
 import { ProductCartType } from '@/types/Products';
-import exp from 'constants';
 
 export function GetCart() {
+  // const newCart = await getCart(session?.user.accessToken as string);
   const cart = localStorage.getItem('cart');
   if (cart) {
     return JSON.parse(cart);
@@ -21,7 +22,9 @@ export function addItemToCart(product: ProductCartType) {
   SetCart(cart);
 }
 
-export function getProductsFromCart() {
+export async function getProductsFromCart(token: string) {
+  const newProducts = await getCart(token || '');
+  console.log(newProducts);
   const cart = GetCart();
   const productsByStore = new Map();
   cart.forEach((product: ProductCartType) => {
@@ -40,11 +43,13 @@ export function getProductsFromCart() {
       products: productsByStore.get(storeName),
     };
   });
+  console.log(products);
+
   return products;
 }
 
 export function removeItemFromCart(product: ProductCartType) {
-  const cart = GetCart();
+  const cart = GetCart() as any;
   cart.forEach((item: ProductCartType, index: number) => {
     if (
       item.productId === product.productId &&

@@ -43,7 +43,7 @@ function ProductCard({
         <section className={styles.iconContainer} onClick={handleOnAdd}>
           <Icon icon="material-symbols-light:add-shopping-cart" width={30} />
         </section>
-        <img src={product.photosurl} />
+        <img src={product.photosUrl} />
         <section className={styles.infoContainer}>
           <section>
             <p className={styles.price}>

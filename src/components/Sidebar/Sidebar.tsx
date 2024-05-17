@@ -10,11 +10,13 @@ import { CleanFavorites } from '@/helpers/favHelper';
 
 function Sidebar({ onClose }: { onClose: () => void }) {
   const session = useSession();
-  const [userMail, setUserMail] = useState<string>('anon@mail.com');
+  const [image, setImage] = useState<string>('/images/user.jpeg');
   const router = useRouter();
   useEffect(() => {
-    session && setUserMail(session.data?.user?.email as string);
-  }, []);
+    session &&
+      session.data?.user?.image &&
+      setImage(session.data?.user?.image as string);
+  }, [session]);
   const handleLogout = async () => {
     CleanCart();
     CleanFavorites();
@@ -29,14 +31,7 @@ function Sidebar({ onClose }: { onClose: () => void }) {
     <div className={styles.container}>
       <section className={styles.header}>
         <img className={styles.banner} src="/images/SidebarBanner.jpg" />
-        <img
-          className={styles.userImage}
-          src={
-            userMail === 'anon@mail.com'
-              ? '/images/user.jpeg'
-              : session.data?.user.image
-          }
-        />
+        <img className={styles.userImage} src={image} />
         <p className={styles.userName}>
           {session.data?.user.name || 'Anonymous'}
         </p>

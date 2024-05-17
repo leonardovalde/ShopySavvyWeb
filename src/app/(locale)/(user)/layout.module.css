@@ -73,12 +73,18 @@
   color: #804300;
 }
 
-.title > h1:hover{
+.title > h1:hover {
   cursor: pointer;
 }
 
-.cartContainer{
+.cartContainer {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+}
+
+@media screen and (max-width: 600px) {
+  .title > h1 {
+    display: none;
+  }
 }

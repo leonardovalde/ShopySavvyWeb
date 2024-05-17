@@ -2,7 +2,7 @@ export interface ProductType {
   productId: number;
   name: string;
   price: string;
-  photosurl: string;
+  photosUrl: string;
   unit: string;
   subunit: string;
   subqty: string;
@@ -12,7 +12,12 @@ export interface ProductType {
   brand: string;
   category: string;
   storeName: string;
+  additionalPrices: {
+    price: string;
+    storeId: string;
+  }[];
 }
+
 export interface ProductCartType {
   productId: number;
   product: ProductType;

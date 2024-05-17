@@ -1,6 +1,7 @@
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import { manageGoogleLogin } from '@/services/api/auth';
 
 export const authOptions = {
   // Configure one or more authentication providers
@@ -8,6 +9,15 @@ export const authOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      async profile(profile) {
+        return {
+          id: profile.sub,
+          name: profile.name,
+          email: profile.email,
+          image: profile.picture,
+          accessToken: await manageGoogleLogin(profile.email),
+        };
+      },
     }),
     CredentialsProvider({
       name: 'Credentials',
@@ -15,6 +25,7 @@ export const authOptions = {
         email: { label: 'email', type: 'email' },
         password: { label: 'Password', type: 'password' },
       },
+
       async authorize(credentials) {
         const user = await fetch(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/login`,
@@ -58,6 +69,10 @@ export const authOptions = {
   pages: {
     signIn: '/login',
     newUser: '/register',
+  },
+  session: {
+    strategy: 'jwt',
+    maxAge: 60 * 60, // 4 hours
   },
 };
 

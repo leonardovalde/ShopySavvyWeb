@@ -1,0 +1,45 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: 0 auto;
+  padding-bottom: 30px;
+}
+.container > h1 {
+  margin-left: 1rem;
+  font-weight: 300;
+  font-size: 1.76rem;
+  padding-left: 1rem;
+  color: #2c2c2c;
+}
+.container > h1 > span {
+  font-weight: 400;
+  color: #000000;
+}
+
+.container > h1::first-letter {
+  text-transform: capitalize;
+}
+.productsContainer {
+  margin: 1.8rem 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.8rem;
+}
+
+.loadMoreButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  width: 40%;
+  height: 40px;
+  background-color: #aff1b331;
+  color: #348f3a;
+  border: 1px solid #348f3a;
+  border-radius: 10px;
+}
+.loadMoreButton:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+}

@@ -27,9 +27,14 @@ function ProductSelector({
   const handleOnAdd = () => {
     const newProductToCart: ProductCartType = {
       productId: product.productId,
-      product: product,
+      product: {
+        ...product,
+        price:
+          product.additionalPrices.find((p) => p.storeId === SelectedStore)
+            ?.price || product.price,
+      },
       storeName: SelectedStore as string,
-      quantity: 1,
+      quantity: quantity,
     };
     onAdd(newProductToCart);
   };
@@ -43,6 +48,22 @@ function ProductSelector({
     setFavState(!favState);
     removeItemFromCart(product);
     onRemoveFavorite && onRemoveFavorite(product);
+  };
+  const [quantity, setQuantity] = useState(1);
+
+  const handleIncrease = () => {
+    setQuantity((prevQuantity) => prevQuantity + 1);
+  };
+
+  const handleDecrease = () => {
+    setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value, 10);
+    if (!isNaN(value) && value > 0) {
+      setQuantity(value);
+    }
   };
   return (
     <div className={styles.container}>
@@ -65,7 +86,7 @@ function ProductSelector({
           onClick={(e) => {
             e.stopPropagation();
           }}>
-          <img className={styles.productImage} src={product.photosurl} />
+          <img className={styles.productImage} src={product.photosUrl} />
           <p className={styles.productName}>{product.name}</p>
           <section className={styles.storesContainer}>
             {product.storeName.split(',').map((store) => (
@@ -73,13 +94,32 @@ function ProductSelector({
                 key={store}
                 store={store}
                 storeImage={getStoreImageByName(store) as string}
-                price={product.price}
+                // price={product.price}
+                price={
+                  product.additionalPrices.find((p) => p.storeId === store)
+                    ?.price || product.price
+                }
                 onClick={() =>
                   setSelectedStore(store === SelectedStore ? null : store)
                 }
                 selectedStore={SelectedStore}
               />
             ))}
+          </section>
+          <section className={styles.quantitySection}>
+            <button className={styles.decreaseButton} onClick={handleDecrease}>
+              -
+            </button>
+            <input
+              className={styles.quantityInput}
+              type="number"
+              value={quantity}
+              onChange={handleChange}
+              min="1"
+            />
+            <button className={styles.increaseButton} onClick={handleIncrease}>
+              +
+            </button>
           </section>
           <section className={styles.buySection}>
             <button

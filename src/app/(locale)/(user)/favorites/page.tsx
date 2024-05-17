@@ -8,6 +8,7 @@ import { ProductCartType, ProductType } from '@/types/Products';
 import { ToastContainer, toast } from 'react-toastify';
 import { addItemToCart } from '@/helpers/cartHelper';
 import { GetFavorites } from '@/helpers/favHelper';
+import { addToCart } from '@/services/api/cart';
 
 function page({ params }: { params: { Category: string } }) {
   const [showGetMore, setShowGetMore] = useState(true);
@@ -36,6 +37,7 @@ function page({ params }: { params: { Category: string } }) {
   }
   const handleCartAdd = (product: ProductCartType): void => {
     addItemToCart(product);
+    addToCart(session?.user.accessToken as string, product);
     toast.success(`${product.product.name} added to cart `);
   };
   const handleRemoveFavorite = (product: ProductType): void => {

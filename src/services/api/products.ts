@@ -47,9 +47,16 @@ export async function GetProductByCategory(
   return response;
 }
 
-export async function GetProductByName(token: string, name: string) {
+export async function GetProductByName(
+  token: string,
+  name: string,
+  page?: number,
+  limit?: number,
+) {
   const response = await fetch(
-    `${backendUrl}/Products/products_containing?product_name=${name}`,
+    `${backendUrl}/Products/products_containing?product_name=${name}&pageSize=${
+      limit || 10
+    }&page=${page || 1}`,
     {
       method: 'GET',
       headers: {

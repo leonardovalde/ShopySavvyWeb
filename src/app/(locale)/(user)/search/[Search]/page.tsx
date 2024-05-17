@@ -1,6 +1,10 @@
 'use client';
 import ProductCard from '@/components/ProductCard/ProductCard';
-import { GetProductByCategory, GetProducts } from '@/services/api/products';
+import {
+  GetProductByCategory,
+  GetProductByName,
+  GetProducts,
+} from '@/services/api/products';
 import { useSession } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
 import styles from './page.module.css';
@@ -9,7 +13,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { addItemToCart } from '@/helpers/cartHelper';
 import { addToCart } from '@/services/api/cart';
 
-function page({ params }: { params: { Category: string } }) {
+function page({ params }: { params: { Search: string } }) {
   const [showGetMore, setShowGetMore] = useState(true);
   const { data: session } = useSession();
   const [page, setPage] = useState(1);
@@ -17,15 +21,12 @@ function page({ params }: { params: { Category: string } }) {
   const [products, setProducts] = useState<any[]>([]);
   useEffect(() => {
     const getProducts = async () => {
-      const newProducts: any =
-        (await params.Category) === 'all_products'
-          ? await GetProducts(session?.user.accessToken as string)
-          : await GetProductByCategory(
-              session?.user.accessToken as string,
-              params.Category,
-              page,
-              limit,
-            );
+      const newProducts: any = await GetProductByName(
+        session?.user.accessToken as string,
+        params.Search,
+        page,
+        limit,
+      );
       products.length === 0 &&
         setProducts(
           newProducts.items
@@ -36,9 +37,9 @@ function page({ params }: { params: { Category: string } }) {
     session?.user.accessToken && getProducts();
   }, [session?.user.accessToken]);
   async function handleLoadMore() {
-    const newProducts = await GetProductByCategory(
+    const newProducts = await GetProductByName(
       session?.user.accessToken as string,
-      params.Category,
+      params.Search,
       page + 1,
       limit,
     );
@@ -55,8 +56,7 @@ function page({ params }: { params: { Category: string } }) {
     <div className={styles.container}>
       <ToastContainer autoClose={1000} />
       <h1>
-        Category:{' '}
-        <span>{params.Category.replaceAll('_', ' ').toUpperCase()}</span>
+        Search: <span>{params.Search.replaceAll('_', ' ').toUpperCase()}</span>
       </h1>
       <section className={styles.productsContainer}>
         {products.map((product, index) => (
