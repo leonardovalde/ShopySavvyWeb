@@ -10,7 +10,7 @@ import { CleanFavorites } from '@/helpers/favHelper';
 
 function Sidebar({ onClose }: { onClose: () => void }) {
   const session = useSession();
-  const [image, setImage] = useState<string>('/images/user.jpeg');
+  const [image, setImage] = useState<string>('/svg/user.jpeg');
   const router = useRouter();
   useEffect(() => {
     session &&
@@ -30,7 +30,7 @@ function Sidebar({ onClose }: { onClose: () => void }) {
   return (
     <div className={styles.container}>
       <section className={styles.header}>
-        <img className={styles.banner} src="/images/SidebarBanner.jpg" />
+        <img className={styles.banner} src="/svg/SidebarBanner.jpg" />
         <img className={styles.userImage} src={image} />
         <p className={styles.userName}>
           {session.data?.user.name || 'Anonymous'}
