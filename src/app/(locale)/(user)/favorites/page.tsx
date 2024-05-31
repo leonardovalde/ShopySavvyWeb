@@ -30,7 +30,7 @@ function page({ params }: { params: { Category: string } }) {
     };
     session?.user.accessToken && getProducts();
   }, [session?.user.accessToken]);
-  
+
   const handleCartAdd = (product: ProductCartType): void => {
     addItemToCart(product);
     addToCart(session?.user.accessToken as string, product);
@@ -38,7 +38,7 @@ function page({ params }: { params: { Category: string } }) {
   };
   const handleRemoveFavorite = (product: ProductType): void => {
     const newProducts = products.filter(
-      (item) => item.productId !== product.productId,
+      (item: ProductType) => item.productId !== product.productId,
     );
     setProducts(newProducts);
   };
