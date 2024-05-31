@@ -8,7 +8,7 @@ function CategoryCard({ category }: { category: string }) {
     <div
       className={styles.container}
       onClick={() => router.push(`/category/${category}`)}>
-      <img src={`/images/${category}.jpg`} />
+      <img src={`/svg/${category}.jpg`} />
       <p className={styles.name}>{category}</p>
     </div>
   );

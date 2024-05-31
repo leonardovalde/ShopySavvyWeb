@@ -57,7 +57,7 @@ function page() {
         data.categories.map((category: string, i: number) => ({
           category: category,
           id: i,
-          image: `/images/${category}.png`,
+          image: `/svg/${category}.png`,
         })),
       );
       setCategories(newCategories);

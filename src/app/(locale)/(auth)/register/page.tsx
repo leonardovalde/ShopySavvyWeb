@@ -59,7 +59,7 @@ function page() {
                 <Image
                     className='image'
 
-                    src="/images/auth1.png"
+                    src="/svg/auth1.png"
                     layout="fill"
                     objectFit="cover" alt='' />
 
