@@ -45,7 +45,7 @@ export async function getCart(token: string) {
     return {
       totalPrice: productsByStore
         .get(storeName)
-        .map((product: any) => Number(product.product.price))
+        .map((product: any) => Number(product.product.price * product.quantity))
         .reduce((a: number, b: number) => a + b, 0),
       storeName,
       products: productsByStore.get(storeName),
