@@ -1,4 +1,5 @@
 import { ProductCartType } from '@/types/Products';
+import { json } from 'stream/consumers';
 
 const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
@@ -11,7 +12,15 @@ export async function getCart(token: string) {
     },
   })
     .then((res) => res.json())
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log(err);
+
+      return [];
+    });
+
+  if (JSON.stringify(response) === '[]') {
+    return [];
+  }
   const productByEan: any = await getProductByEan(token, [
     ...response.items.map((item: any) => item.productEan),
   ]);
@@ -23,14 +32,14 @@ export async function getCart(token: string) {
         productsByStore.set(product.storeName, []);
       }
       productsByStore.get(product.storeName).push({
+        itemId: product.itemId,
         product: productByEan.find(
           (productd: any) => productd.ean === product.productEan,
         ),
         storeName: product.storeName,
-        quantity: 1,
+        quantity: product.quantity,
       });
     });
-  console.log(productsByStore);
 
   const response2 = Array.from(productsByStore.keys()).map((storeName) => {
     return {
@@ -45,7 +54,7 @@ export async function getCart(token: string) {
   return response2;
 }
 
-async function getProductByEan(token: string, eanList: string[]) {
+export async function getProductByEan(token: string, eanList: string[]) {
   const response = await fetch(`${backendUrl}/Products/product_by_ean`, {
     method: 'POST',
     headers: {
@@ -60,7 +69,6 @@ async function getProductByEan(token: string, eanList: string[]) {
 }
 
 export async function addToCart(token: string, product: ProductCartType) {
-  console.log(product);
   const response = await fetch(`${backendUrl}/ShoppingCart/add`, {
     method: 'POST',
     headers: {
@@ -75,4 +83,26 @@ export async function addToCart(token: string, product: ProductCartType) {
       storeName: product.storeName,
     }),
   });
+}
+
+export async function removeCartItem(itemId: number, token: string) {
+  const response = await fetch(`${backendUrl}/ShoppingCart/remove/${itemId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response;
+}
+
+export async function clearCart(token: string) {
+  const response = await fetch(`${backendUrl}/ShoppingCart/clear`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response;
 }

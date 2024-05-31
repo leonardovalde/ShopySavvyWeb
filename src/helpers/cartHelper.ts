@@ -22,30 +22,30 @@ export function addItemToCart(product: ProductCartType) {
   SetCart(cart);
 }
 
-export async function getProductsFromCart(token: string) {
-  const newProducts = await getCart(token || '');
-  console.log(newProducts);
-  const cart = GetCart();
-  const productsByStore = new Map();
-  cart.forEach((product: ProductCartType) => {
-    if (!productsByStore.has(product.storeName)) {
-      productsByStore.set(product.storeName, []);
-    }
-    productsByStore.get(product.storeName).push(product);
-  });
-  const products = Array.from(productsByStore.keys()).map((storeName) => {
-    return {
-      totalPrice: productsByStore
-        .get(storeName)
-        .map((product: ProductCartType) => Number(product.product.price))
-        .reduce((a: number, b: number) => a + b, 0),
-      storeName,
-      products: productsByStore.get(storeName),
-    };
-  });
-  console.log(products);
+export function getProductsFromCart(
+  products: any[],
+  productToDelete: ProductCartType,
+) {
+  const returnProducts = products.map((product) => {
+    if (product.storeName === productToDelete.storeName) {
+      const newProducts = product.products.filter(
+        (item: any) => item.itemId !== productToDelete.itemId,
+      );
+      const newTotal = newProducts.reduce((total: number, item: any) => {
+        const price = parseInt(item.product.price, 10);
+        return total + price * item.quantity;
+      }, 0);
 
-  return products;
+      return {
+        ...product,
+        totalPrice: newTotal,
+        products: newProducts,
+      };
+    } else {
+      return product;
+    }
+  });
+  return returnProducts || [];
 }
 
 export function removeItemFromCart(product: ProductCartType) {

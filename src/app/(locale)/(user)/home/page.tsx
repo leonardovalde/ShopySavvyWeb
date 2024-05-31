@@ -46,6 +46,7 @@ function page() {
     const getProducts = async () => {
       const newProducts = await GetProducts(
         session?.user.accessToken as string,
+        Number(Math.random().toString().slice(2, 3)),
       );
       setProducts(newProducts.items);
     };

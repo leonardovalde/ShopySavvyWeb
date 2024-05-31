@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './ProductSelector.module.css';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { ProductCartType, ProductType } from '@/types/Products';
@@ -9,7 +9,9 @@ import {
   addItemToFavorites,
   isInFavorites,
   removeItemFromCart,
+  removeItemFromFavorites,
 } from '@/helpers/favHelper';
+import { useSession } from 'next-auth/react';
 
 function ProductSelector({
   product,
@@ -23,7 +25,9 @@ function ProductSelector({
   onRemoveFavorite?: (product: ProductType) => void;
 }) {
   const [SelectedStore, setSelectedStore] = useState<string | null>(null);
-  const [favState, setFavState] = useState<boolean>(isInFavorites(product));
+  const { data: session, status } = useSession();
+
+  const [favState, setFavState] = useState<boolean>(false);
   const handleOnAdd = () => {
     const newProductToCart: ProductCartType = {
       productId: product.productId,
@@ -39,15 +43,17 @@ function ProductSelector({
     onAdd(newProductToCart);
   };
   const handleOnFavorite = () => {
-    toast.success('Favoritado');
+    toast.success('Product added to favorites');
     setFavState(!favState);
-    addItemToFavorites(product);
+    addItemToFavorites(product, session?.user.accessToken as string);
   };
   const handleOffFavorite = () => {
-    toast.success('Desfavoritado');
+    toast.success('Product removed from favorites');
     setFavState(!favState);
-    removeItemFromCart(product);
-    onRemoveFavorite && onRemoveFavorite(product);
+    removeItemFromFavorites(
+      product,
+      session?.user.accessToken as string as string,
+    );
   };
   const [quantity, setQuantity] = useState(1);
 
@@ -65,6 +71,19 @@ function ProductSelector({
       setQuantity(value);
     }
   };
+  useEffect(() => {
+    async function isFavorited() {
+      const isFavorite = await isInFavorites(
+        product,
+        session?.user.accessToken as string,
+      );
+      setFavState(isFavorite as any);
+    }
+
+    isFavorited();
+
+    status === 'authenticated' && isFavorited();
+  }, []);
   return (
     <div className={styles.container}>
       <section

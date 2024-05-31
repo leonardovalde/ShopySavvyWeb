@@ -1,6 +1,10 @@
 'use client';
 import ProductCard from '@/components/ProductCard/ProductCard';
-import { GetProductByCategory, GetProducts } from '@/services/api/products';
+import {
+  GetFavoriteProducts,
+  GetProductByCategory,
+  GetProducts,
+} from '@/services/api/products';
 import { useSession } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
 import styles from './page.module.css';
@@ -15,26 +19,18 @@ function page({ params }: { params: { Category: string } }) {
   const { data: session } = useSession();
   const [page, setPage] = useState(1);
   const [limit] = useState(20);
-  const [products, setProducts] = useState<any[]>([]);
+  const [products, setProducts] = useState([]);
   useEffect(() => {
     const getProducts = async () => {
-      const newProducts: any = GetFavorites();
-      setProducts(newProducts);
+      const favProducts: any = await GetFavoriteProducts(
+        session?.user.accessToken || '',
+      );
+      console.log(favProducts);
+      setProducts(favProducts);
     };
     session?.user.accessToken && getProducts();
   }, [session?.user.accessToken]);
-  useEffect(() => {}, [products]);
-  async function handleLoadMore() {
-    const newProducts = await GetProductByCategory(
-      session?.user.accessToken as string,
-      params.Category,
-      page + 1,
-      limit,
-    );
-    setProducts(products.concat(newProducts.items && newProducts.items));
-    newProducts.items.length < limit && setShowGetMore(false);
-    setPage((prev) => prev + 1);
-  }
+  
   const handleCartAdd = (product: ProductCartType): void => {
     addItemToCart(product);
     addToCart(session?.user.accessToken as string, product);
@@ -53,14 +49,15 @@ function page({ params }: { params: { Category: string } }) {
         <span>Favorites</span>
       </h1>
       <section className={styles.productsContainer}>
-        {products.map((product, index) => (
-          <ProductCard
-            product={product}
-            key={index}
-            onAdd={handleCartAdd}
-            onRemoveFavorite={handleRemoveFavorite}
-          />
-        ))}
+        {products.length > 0 &&
+          products.map((product, index) => (
+            <ProductCard
+              product={product}
+              key={index}
+              onAdd={handleCartAdd}
+              onRemoveFavorite={handleRemoveFavorite}
+            />
+          ))}
       </section>
     </div>
   );

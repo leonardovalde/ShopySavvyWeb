@@ -19,6 +19,7 @@ export interface ProductType {
 }
 
 export interface ProductCartType {
+  itemId?: number;
   productId: number;
   product: ProductType;
   storeName: string;

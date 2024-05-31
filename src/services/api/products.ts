@@ -1,13 +1,18 @@
+import { getProductByEan } from './cart';
+
 const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
-export async function GetProducts(token: string) {
-  const response = await fetch(`${backendUrl}/Products/products`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
+export async function GetProducts(token: string, page?: number) {
+  const response = await fetch(
+    `${backendUrl}/Products/products?pageSize=30&page=${page || 3}`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
     },
-  })
+  )
     .then((res) => res.json())
     .catch((err) => console.log(err));
 
@@ -67,5 +72,54 @@ export async function GetProductByName(
   )
     .then((res) => res.json())
     .catch((err) => console.log(err));
+  return response;
+}
+
+export async function GetFavoriteProducts(token: string) {
+  const response = await fetch(`${backendUrl}/Preferences/preferences`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((res) => res.json())
+    .catch((err) => console.log(err));
+  if (response.length > 0) {
+    const productByEan: any = await getProductByEan(token, [
+      ...response.map((item: any) => item.ean),
+    ]);
+    console.log(productByEan);
+
+    return productByEan;
+  }
+  return [];
+}
+
+export async function AddFavoriteProduct(token: string, ean: string) {
+  const response = await fetch(`${backendUrl}/preferences/add?ean=${ean}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((res) => res.json())
+    .catch((err) => console.log(err));
+
+  return response;
+}
+
+export async function RemoveFavoriteProduct(token: string, ean: string) {
+  const response = await fetch(`${backendUrl}/preferences/remove?ean=${ean}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((res) => res.json())
+    .catch((err) => console.log(err));
+
   return response;
 }

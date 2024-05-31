@@ -11,21 +11,21 @@ import { getStoreImageByName } from '@/helpers/ProductsHelper';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { getCart } from '@/services/api/cart';
+import { clearCart, getCart, removeCartItem } from '@/services/api/cart';
 import { useSession } from 'next-auth/react';
 
 function Cart({ onClose }: { onClose: () => void }) {
   const { data: session, status } = useSession();
   const [products, setProducts] = useState([]);
   const handleOnDelete = (product: ProductCartType) => {
-    removeItemFromCart(product);
+    removeCartItem(product.itemId || 0, session?.user.accessToken || '');
     toast.info(`${product.product.name} removed from cart`);
-    setProducts(getProductsFromCart(session?.user.accessToken || '') as any);
+    setProducts(getProductsFromCart(products, product) as any);
     console.log('deleted', product);
   };
   const handleCleanCart = () => {
-    CleanCart();
-    setProducts(getProductsFromCart(session?.user.accessToken || '') as any);
+    clearCart(session?.user.accessToken || '');
+    setProducts([]);
     toast.info(`Cart cleaned`);
   };
   async function getProducts() {
@@ -33,8 +33,6 @@ function Cart({ onClose }: { onClose: () => void }) {
     setProducts(newProducts);
   }
   useEffect(() => {
-    // getProducts();
-    // setProducts(getProductsFromCart(session?.user.accessToken || '') as any);
     status === 'authenticated' && getProducts();
   }, []);
 
@@ -47,15 +45,15 @@ function Cart({ onClose }: { onClose: () => void }) {
           <section className={styles.storesContainer}>
             {products.length > 0 ? (
               products.map((product: CartProductsType) => (
-                <div className={styles.storeContainer}>
+                <div className={styles.storeContainer} key={product.storeName}>
                   <section className={styles.storeHeader}>
                     <img src={getStoreImageByName(product.storeName)} />
                     <p>{product.storeName}</p>
                   </section>
                   <section className={styles.productsContainer}>
-                    {product.products.map((product: ProductCartType) => (
+                    {product.products.map((product: ProductCartType, index) => (
                       <Product
-                        key={product.productId}
+                        key={index}
                         product={product}
                         onDelete={() => handleOnDelete(product)}
                       />
@@ -99,13 +97,14 @@ function Product({
   return (
     <div className={styles.productContainer}>
       <section className={styles.productDescription}>
+        <p>{product.quantity}</p>
         <img src={product.product.photosUrl} />
         <p className={styles.productName}>{product.product.name}</p>
       </section>
       <section className={styles.productPriceContainer}>
         <p className={styles.productPrice}>
           $
-          {product.product.price
+          {(Number(product.product.price) * product.quantity)
             .toString()
             .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}
         </p>

@@ -19,7 +19,7 @@ function page({ params }: { params: { Category: string } }) {
     const getProducts = async () => {
       const newProducts: any =
         (await params.Category) === 'all_products'
-          ? await GetProducts(session?.user.accessToken as string)
+          ? await GetProducts(session?.user.accessToken as string, page)
           : await GetProductByCategory(
               session?.user.accessToken as string,
               params.Category,
@@ -36,12 +36,15 @@ function page({ params }: { params: { Category: string } }) {
     session?.user.accessToken && getProducts();
   }, [session?.user.accessToken]);
   async function handleLoadMore() {
-    const newProducts = await GetProductByCategory(
-      session?.user.accessToken as string,
-      params.Category,
-      page + 1,
-      limit,
-    );
+    const newProducts =
+      params.Category === 'all_products'
+        ? await GetProducts(session?.user.accessToken as string, page)
+        : await GetProductByCategory(
+            session?.user.accessToken as string,
+            params.Category,
+            page + 1,
+            limit,
+          );
     setProducts(products.concat(newProducts.items && newProducts.items));
     newProducts.items.length < limit && setShowGetMore(false);
     setPage((prev) => prev + 1);
