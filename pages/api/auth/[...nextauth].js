@@ -70,10 +70,6 @@ export const authOptions = {
     signIn: '/login',
     newUser: '/register',
   },
-  session: {
-    strategy: 'jwt',
-    maxAge: 60 * 60, // 4 hours
-  },
 };
 
 export default NextAuth(authOptions);

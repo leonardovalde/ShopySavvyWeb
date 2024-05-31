@@ -58,7 +58,7 @@ function SearchBar() {
       <input
         onChange={(event) => setSearch(event.target.value)}
         onFocus={() => setShowList(true)}
-        onBlur={() => setTimeout(() => setShowList(false), 100)}
+        onBlur={() => setTimeout(() => setShowList(false), 1000)}
         className="searchBar"
         placeholder="Arroz, Papel Higienico, Cafe, Coca Cola..."
       />
